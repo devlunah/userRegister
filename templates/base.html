@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Sistema de Registro de Usuários{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">📋 Registro de Usuários</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('cadastro') }}">Cadastrar</a></li>
+                <li><a href="{{ url_for('buscar') }}">Buscar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                        <button onclick="this.parentElement.style.display='none';" class="close-btn">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block conteudo %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>&copy; 2026 - Sistema de Registro de Usuários com Flask</p>
+    </footer>
+</body>
+</html>

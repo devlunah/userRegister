@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block titulo %}Home - Registro de Usuários{% endblock %}
+
+{% block conteudo %}
+<div class="content">
+    <h1>Sistema de Registro de Usuários</h1>
+    <p class="subtitle">Bem-vindo ao sistema. Escolha uma opção acima para começar.</p>
+    
+    <div class="action-buttons">
+        <a href="{{ url_for('cadastro') }}" class="btn btn-primary">
+            ➕ Novo Usuário
+        </a>
+        <a href="{{ url_for('buscar') }}" class="btn btn-secondary">
+            🔍 Buscar Usuário
+        </a>
+    </div>
+
+    <h2>Usuários Cadastrados</h2>
+    
+    {% if usuarios %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Idade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario[0] }}</td>
+                            <td>{{ usuario[1] }}</td>
+                            <td>{{ usuario[2] }}</td>
+                            <td class="actions">
+                                <a href="{{ url_for('editar', cpf=usuario[1]) }}" class="btn btn-sm btn-edit">
+                                    ✏️ Editar
+                                </a>
+                                <form method="POST" action="{{ url_for('deletar', cpf=usuario[1]) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-delete" onclick="return confirm('Tem certeza que deseja deletar?')">
+                                        🗑️ Deletar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>Nenhum usuário cadastrado ainda.</p>
+            <a href="{{ url_for('cadastro') }}" class="btn btn-primary">Cadastrar Primeiro Usuário</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

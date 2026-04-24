@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block titulo %}Buscar Usuário - Registro de Usuários{% endblock %}
+
+{% block conteudo %}
+<div class="form-container">
+    <h1>Buscar Usuário</h1>
+    
+    <form method="POST" class="form">
+        <div class="form-group">
+            <label for="cpf">Digite o CPF:</label>
+            <input type="text" id="cpf" name="cpf" required placeholder="Ex: 123.456.789-00" maxlength="14">
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">Buscar</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary btn-large">Voltar</a>
+        </div>
+    </form>
+
+    {% if usuario %}
+        <div class="search-result">
+            <h2>Resultado da Busca</h2>
+            <div class="user-card">
+                <p><strong>Nome:</strong> {{ usuario[0] }}</p>
+                <p><strong>CPF:</strong> {{ usuario[1] }}</p>
+                <p><strong>Idade:</strong> {{ usuario[2] }}</p>
+                <div class="card-actions">
+                    <a href="{{ url_for('editar', cpf=usuario[1]) }}" class="btn btn-primary">Editar</a>
+                    <form method="POST" action="{{ url_for('deletar', cpf=usuario[1]) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-delete" onclick="return confirm('Tem certeza que deseja deletar?')">Deletar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

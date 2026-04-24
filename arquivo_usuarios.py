@@ -1,6 +1,6 @@
 import os
 
-arquivo = "./aula-06/trabalho/usuarios.txt"
+arquivo = "./usuarios.txt"
 
 def carregar_usuarios():
     if os.path.exists(arquivo):
